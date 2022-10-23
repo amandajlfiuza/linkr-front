@@ -9,7 +9,7 @@ import { UserContext } from "../contexts/UserContext";
 import verifyStoredToken from "../utils/verifyStoredToken";
 
 export default function Signin() {
-  const { setUserData, setUserImage } = useContext(UserContext);
+  const { setUserData } = useContext(UserContext);
   const [form, setForm] = useState({});
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const navigate = useNavigate();

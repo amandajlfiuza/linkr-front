@@ -10,7 +10,7 @@ import Search from "./SearchBox.js";
 import SearchMobile from "./SearchBox.js";
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(true);
   const { userData, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
   const token =
@@ -40,15 +40,15 @@ export default function Navbar() {
           <IconContext.Provider
             value={{ color: `white`, className: "menu-opener" }}
           >
-            {menuOpen ? (
-              <BiChevronUp onClick={() => setMenuOpen(true)} />
+            {!menuOpen ? (
+              <BiChevronDown onClick={() => setMenuOpen(true)} />
             ) : (
-              <BiChevronDown onClick={() => setMenuOpen(false)} />
+              <BiChevronUp onClick={() => setMenuOpen(false)} />
             )}
-            
+
             <img
               onClick={() => {
-                if (!menuOpen) {
+                if (menuOpen) {
                   setMenuOpen(true);
                 } else {
                   setMenuOpen(false);
@@ -58,7 +58,7 @@ export default function Navbar() {
               alt=""
             />
           </IconContext.Provider>
-          <LogoutBox isMenuOpen={!menuOpen}>
+          <LogoutBox isMenuOpen={menuOpen}>
             <p
               onClick={() => {
                 if (window.confirm("Are you sure you want to logout?")) {
