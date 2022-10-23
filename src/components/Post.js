@@ -17,20 +17,21 @@ export default function Post({
     metadata,
     liked,
     likesCount,
-    callApi,
-    setCallApi,
     messageToolTip
 }) {
     
     const [like, setLike] = useState(liked)
+    //console.log(liked + " " + like + " " + postId)
     const [heartColor, setHeartColor] = useState("white")
     const likesIsOne = likesCount === "1" ? "1 curtida" : ` ${likesCount} curtidas`
-    const { userData } = useContext(UserContext)
-    const config = {headers: {"Authorization": `Bearer ${userData.token}`}}
+    const { userData, callApi, setCallApi } = useContext(UserContext)
+    const token = userData.token ? userData.token : JSON.parse(localStorage.getItem("user")).token
+    const config = {headers: {"Authorization": `Bearer ${token}`}}
     
     
     useEffect(() => {
         liked ? setHeartColor("red") : setHeartColor("white")
+        console.log(liked + " " + like + " " + postId)
     }, [])
     
 
@@ -118,5 +119,4 @@ const LikesCount = styled.p`
 const Message = styled(LikesCount)`
     color: #505050;
     font-weight: 700;
-;
 `

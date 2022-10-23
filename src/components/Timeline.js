@@ -6,13 +6,16 @@ import { UserContext } from "../contexts/UserContext";
 import Publish from "./Publish";
 
 export default function Timeline() {
-    const { posts, setPosts, userData, message, setMessage } = useContext(UserContext);
-    const [callApi, setCallApi] = useState(true);
-    const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+    
+    const { posts, setPosts, userData, message, setMessage, callApi } = useContext(UserContext);
+    const token = userData.token ? userData.token : JSON.parse(localStorage.getItem("user")).token
+    //const [callApi, setCallApi] = useState(true);
+    const config = { headers: { Authorization: `Bearer ${token}` } };
 
     useEffect(async ()=> {
         try {
             const response = await getPostsData(config);
+            console.log(response)
             
             if (response.data.length === 0) {
                 setMessage("There are no posts yet");
@@ -47,8 +50,6 @@ export default function Timeline() {
                     liked={value.liked}
                     likesCount={value.likesCount}
                     messageToolTip={value.messageToolTip}
-                    callApi={callApi}
-                    setCallApi={setCallApi}
                 />
                 ))
             ) : (

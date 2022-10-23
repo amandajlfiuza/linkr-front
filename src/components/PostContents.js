@@ -64,6 +64,8 @@ const Link = styled.div`
 const LinkContents = styled.div`
     margin-left: 20px;
     margin-top: 20px;
+    width: 60%;
+    min-height: 115px;
 
     @media (max-width: 650px) {
         margin-left: 10px;
@@ -94,6 +96,7 @@ const Description = styled(Title)`
 `
 const Url = styled(Description)`
     color: #CECECE;
+    word-break: break-all;
 `
 const LinkImage = styled.img`
     width: 153.44px;
