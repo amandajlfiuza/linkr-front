@@ -8,10 +8,11 @@ import Publish from "./Publish";
 export default function Timeline() {
   const { posts, setPosts, userData, message, setMessage } =
     useContext(UserContext);
-  const [callApi, setCallApi] = useState(true);
+  const [callApi, setCallApi] = useState(0);
   const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 
   useEffect(async () => {
+    console.log('chamou api')
     try {
       const response = await getPostsData(config);
 
@@ -27,10 +28,29 @@ export default function Timeline() {
     }
   }, [callApi]);
 
+  function teste() {
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userData.token}`
+        }}
+    getPostsData(config).then(response => {
+        console.log(response)
+        if (response.data.length === 0) {
+            return setMessage("There are no posts yet");
+        }
+        setPosts(response.data);
+        //window.location.reload(true)
+    }).catch((error) => {
+        setMessage("An error occured while trying to fetch the posts, please refresh the page");
+        console.log(error);
+    })
+}
+
   return (
     <TimelineWrapper>
       <Title>timeline</Title>
-      <Publish></Publish>
+      <Publish callApi = {callApi} setCallApi = {setCallApi} teste = {teste}></Publish>
       <Container>
         {posts.length > 0 ? (
           posts.map((value, index) => (
@@ -48,6 +68,7 @@ export default function Timeline() {
               messageToolTip={value.messageToolTip}
               callApi={callApi}
               setCallApi={setCallApi}
+              teste = {teste}
             />
           ))
         ) : (

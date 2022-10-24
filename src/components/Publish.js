@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext.js";
 import { getPostsData } from "../services/services";
 
-export default function Publish () {
+export default function Publish ({callApi, setCallApi, teste}) {
     const [form, setForm] = useState({
         post_url: "",
         body: ""
@@ -20,6 +20,8 @@ export default function Publish () {
             [e.target.name]: e.target.value
         });
     }
+
+    
     
     async function submitForm(e) {
         e.preventDefault();
@@ -39,19 +41,8 @@ export default function Publish () {
                 post_url: "",
                 body: ""
             });
-            
-            try {
-                const response = await getPostsData(config);
-                
-                if (response.data.length === 0) {
-                    setMessage("There are no posts yet");
-                }
-                setPosts(response.data);
-                
-            } catch (error) {
-                setMessage("An error occured while trying to fetch the posts, please refresh the page");
-                console.log(error);
-            }
+            //setCallApi(callApi + 1)
+            teste()
             
         } catch (error) {
             setThereWasError(true);
